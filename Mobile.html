@@ -4380,6 +4380,13 @@
     }
   </style>
 
+  <style data-framer-css-custom>
+    .framer-8k3mro::placeholder,
+    .framer-2e51rf::placeholder {
+      color: rgb(82, 82, 82);
+      opacity: 1;
+    }
+  </style>
 
 </head>
 
@@ -5342,41 +5349,32 @@
                       </div>
                     </div>
                     <div class="framer-18gek7a">
-                      <div class="framer-1nq5ceb">
-                        <div class="framer-d23rns" data-framer-component-type="RichTextContainer"
-                          style="transform:none">
-                          <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif"
-                            class="framer-text">Asistentes</p>
-                        </div>
-                        <div data-framer-component-type="SVG" parentsize="0" _constraints="[object Object]" rotation="0"
-                          shadows class="framer-147gili" aria-hidden="true"
-                          style="image-rendering:pixelated;flex-shrink:0;background-size:100% 100%;background-image:url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; viewBox=&quot;0 0 10 6.666&quot; overflow=&quot;visible&quot;><path d=&quot;M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z&quot; fill=&quot;rgb(0,0,0)&quot;></path></svg>')">
-                        </div>
-                      </div>
-                      <div class="framer-799iu9">
-                        <div class="framer-abi9k9" data-framer-component-type="RichTextContainer"
-                          style="transform:none">
-                          <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif"
-                            class="framer-text">Confirmación</p>
-                        </div>
-                        <div data-framer-component-type="SVG" parentsize="0" _constraints="[object Object]" rotation="0"
-                          shadows class="framer-1wo8cta" aria-hidden="true"
-                          style="image-rendering:pixelated;flex-shrink:0;background-size:100% 100%;background-image:url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; viewBox=&quot;0 0 10 6.666&quot; overflow=&quot;visible&quot;><path d=&quot;M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z&quot; fill=&quot;rgb(0,0,0)&quot;></path></svg>')">
-                        </div>
-                      </div>
+                      <select class="framer-1nq5ceb" 
+                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 15px;"
+                              onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
+                          <option value="" disabled selected>Asistentes</option>
+                          <option value="1" style="color: rgb(0, 0, 0);">1 asistente</option>
+                          <option value="2" style="color: rgb(0, 0, 0);">2 asistentes</option>
+                      </select>
+                      <select class="framer-799iu9" 
+                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 15px;"
+                              onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
+                          <option value="" disabled selected>Confirmación</option>
+                          <option value="si" style="color: rgb(0, 0, 0);">Sí, ahí estaré!</option>
+                          <option value="no" style="color: rgb(0, 0, 0);">No podré asistir, lo siento...</option>
+                      </select>
                     </div>
                     <div class="framer-va8x25">
-                      <div class="framer-8k3mro" data-framer-component-type="RichTextContainer" style="transform:none">
-                        <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-text-color:rgb(82, 82, 82)"
-                          class="framer-text">¿Tienes restricciones de alimentos o alergias? Ejemplo: Vegano,
-                          vegetariano, celiaco, intolerante a la lactosa, etc.</p>
-                      </div>
+                      <textarea class="framer-8k3mro" 
+                                placeholder="¿Tienes restricciones de alimentos o alergias? Ejemplo: Vegano, vegetariano, celiaco, intolerante a la lactosa, etc."
+                                style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;">
+                      </textarea>
                     </div>
                     <div class="framer-1mz9p1k">
-                      <div class="framer-2e51rf" data-framer-component-type="RichTextContainer" style="transform:none">
-                        <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-text-alignment:left;--framer-text-color:rgb(82, 82, 82)"
-                          class="framer-text">Mensaje para los novios (opcional)</p>
-                      </div>
+                      <textarea class="framer-2e51rf" 
+                                placeholder="Mensaje para los novios (opcional)"
+                                style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;">
+                      </textarea>
                     </div>
                   </div>
                   <div class="framer-1va0za1">
