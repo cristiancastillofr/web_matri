@@ -7,23 +7,37 @@
         function isMobile() {
             // Este es un chequeo estándar y robusto del "User Agent" del navegador
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            
+
             // Retorna true si detecta un patrón común de móvil o tablet
             return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
         }
 
+        // 1. Obtener los parámetros de consulta de la URL actual (index.html?id=...)
+        const queryString = window.location.search;
+
+        let targetPage;
+
         if (isMobile()) {
-            // Si es móvil, redirige a mobile.html
-            window.location.replace("Mobile.html");
+            // Si es móvil, la página base es Mobile.html
+            targetPage = "Mobile.html";
         } else {
-            // Si es escritorio, redirige a Desktop.html (su página de escritorio)
-            window.location.replace("Desktop.html");
+            // Si es escritorio, la página base es Desktop.html
+            targetPage = "Desktop.html";
         }
+
+        // 2. Concatenar la página base con los parámetros de consulta, si existen.
+        // Si queryString es una cadena vacía (''), el resultado es, por ejemplo, "Desktop.html"
+        // Si queryString es '?id=ZWYR7J', el resultado es "Desktop.html?id=ZWYR7J"
+        const finalUrl = targetPage + queryString;
+
+        // 3. Redireccionar a la URL final
+        window.location.replace(finalUrl);
+
+        // --- FIN DE MODIFICACIÓN ---
+
     </script>
 </head>
 <body>
     <p>Si la página no carga automáticamente, por favor <a href="Mobile.html">haga click aquí para la versión móvil</a> o <a href="Desktop.html">aquí para la versión de escritorio</a>.</p>
 </body>
 </html>
-
-
