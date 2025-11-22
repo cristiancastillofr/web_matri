@@ -4329,7 +4329,105 @@
       opacity: 1;
     }
   </style>
+  <style>
+    /* Estilos para el nuevo carrusel */
+    .carousel-container {
+        position: relative;
+        max-width: 1920px; 
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        
+        /* 💡 FIX 1: Mejora la experiencia de arrastre */
+        user-select: none; /* Previene la selección de texto al arrastrar */
+        cursor: grab; /* Muestra el cursor de agarre */
+    }
 
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 100%;
+        height: 426px; 
+    }
+
+    .carousel-slide {
+        min-width: 468px; 
+        box-sizing: border-box;
+        flex-shrink: 0;
+        height: 100%; 
+        padding: 0 5px; 
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover; 
+    }
+    
+    /* ... (Resto de estilos de botones e indicadores sin cambios) ... */
+    /* Mantenemos los estilos de botones e indicadores del paso anterior */
+
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.4); 
+        color: white;
+        border: none;
+        padding: 8px 12px; 
+        cursor: pointer;
+        z-index: 10;
+        font-size: 20px; 
+        line-height: 1;
+        border-radius: 4px; 
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .carousel-button:hover {
+        background: rgba(0, 0, 0, 0.6);
+        transform: translateY(-50%) scale(1.05); 
+    }
+
+    .carousel-button.prev {
+        left: 10px;
+    }
+
+    .carousel-button.next {
+        right: 10px;
+    }
+
+    .carousel-indicators {
+        position: absolute;
+        bottom: 15px; 
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px; 
+        z-index: 10;
+    }
+
+    .indicator-dot {
+        width: 10px;
+        height: 10px;
+        background-color: rgba(255, 255, 255, 0.6); 
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        border: 1px solid rgba(0, 0, 0, 0.2); 
+    }
+
+    .indicator-dot.active {
+        background-color: white; 
+        transform: scale(1.2); 
+        border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    .indicator-dot:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+</style>
 </head>
 
 <body>
@@ -4349,16 +4447,23 @@
       }
     </style>
     <div data-framer-root class="framer-5oMyC framer-8nshfj" style="min-height:100vh;width:auto">
-      <div class="framer-1ew3wku-container">
-        <div
-          style="position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;background:rgb(226, 165, 37);padding:15px;border-radius:116px">
-          <audio src="https://framerusercontent.com/assets/iAnE6t6973VhwN55RKobaijjMk.mp3" class="framer-audio"
-            preload="metadata" autoplay></audio><svg width="16" aria-label="play audio" class="framer-audio-icon"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="margin-right:0;flex-shrink:0;cursor:pointer">
-            <path
-              d="M 5.379 1.292 C 4.968 1.033 4.449 1.017 4.023 1.251 C 3.598 1.486 3.334 1.933 3.333 2.419 L 3.333 13.581 C 3.334 14.067 3.598 14.514 4.023 14.749 C 4.449 14.983 4.968 14.967 5.379 14.708 L 14.215 9.127 C 14.602 8.883 14.836 8.457 14.836 8 C 14.836 7.543 14.602 7.117 14.215 6.873 Z"
-              fill="#333" />
-          </svg></div>
+      <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+          <div id="music-player-container" style="width: 44px; height: 44px;">
+              
+              <audio id="background-music">
+                  <source src="./audio/musica.mp3" type="audio/mp3">
+                  Tu navegador no soporta el elemento de audio.
+              </audio>
+
+              <button id="play-pause-button" 
+                      style="width: 100%; height: 100%; border: none; border-radius: 50%; 
+                            background-color: rgb(226, 165, 37) !important; 
+                            color: rgb(51, 51, 51) !important; 
+                            cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                  
+                  <span id="player-icon">&#9658;</span> 
+              </button>
+          </div>
       </div>
       <div class="framer-12kt662">
         <div class="framer-np0smr">
@@ -4405,8 +4510,7 @@
                   class="framer-text"><span style="--framer-font-size:56px" class="framer-text">CONSTANZA</span><span
                     style="--framer-font-size:56px" class="framer-text"><br class="framer-text"></span><span
                     style="--font-selector:R0Y7Q2xpY2tlciBTY3JpcHQtcmVndWxhcg==;--framer-font-family:&quot;Clicker Script&quot;, sans-serif;--framer-font-size:56px;--framer-font-weight:400"
-                    class="framer-text">&amp;</span><span style="--framer-font-size:56px" class="framer-text">
-                    CRISTIAN</span></h2>
+                    class="framer-text">&amp;</span><span style="--framer-font-size:56px" class="framer-text">CRISTIAN</span></h2>
               </div>
               <div class="framer-1yljfs" data-framer-name="Separador">
                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
@@ -4540,7 +4644,7 @@
                   <div class="framer-b5tsgo" data-border="true">
                     <div class="framer-qo3ug1" data-framer-component-type="RichTextContainer"
                       style="transform:translateX(-50%)">
-                      <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
+                      <p id="cd-dias" style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
                         class="framer-text">216</p>
                     </div>
                     <div class="framer-91xa7r" data-framer-component-type="RichTextContainer"
@@ -4552,7 +4656,7 @@
                   <div class="framer-164i3e4" data-border="true">
                     <div class="framer-90fkzf" data-framer-component-type="RichTextContainer"
                       style="transform:translateX(-50%)">
-                      <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
+                      <p id="cd-horas" style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
                         class="framer-text">9</p>
                     </div>
                     <div class="framer-504jv6" data-framer-component-type="RichTextContainer"
@@ -4564,7 +4668,7 @@
                   <div class="framer-1x5xy50" data-border="true">
                     <div class="framer-1lmyh5b" data-framer-component-type="RichTextContainer"
                       style="transform:translateX(-50%)">
-                      <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
+                      <p id="cd-minutos" style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
                         class="framer-text">39</p>
                     </div>
                     <div class="framer-vabxcx" data-framer-component-type="RichTextContainer"
@@ -4576,7 +4680,7 @@
                   <div class="framer-19raxse" data-border="true">
                     <div class="framer-1gct30w" data-framer-component-type="RichTextContainer"
                       style="transform:translateX(-50%)">
-                      <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
+                      <p id="cd-segundos" style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:60px;--framer-line-height:60px;--framer-text-alignment:center"
                         class="framer-text">45</p>
                     </div>
                     <div class="framer-mcqs9r" data-framer-component-type="RichTextContainer"
@@ -4627,434 +4731,16 @@
                 </div>
               </div>
             </div>
-            <div class="framer-2nl3wt-container">
-              <section
-                style="display:flex;flex-direction:row;width:100%;height:100%;max-width:100%;max-height:100%;place-items:center;margin:0;padding:0px;list-style-type:none;text-indent:none;opacity:0.001;user-select:none">
-                <div
-                  style="width:100%;height:100%;margin:0;padding:inherit;position:absolute;inset:0;overflow:hidden;border-radius:0;user-select:none;perspective:1200px">
-                  <ul draggable="false"
-                    style="display:flex;flex-direction:row;width:100%;height:100%;max-width:100%;max-height:100%;place-items:center;margin:0;padding:0;list-style-type:none;text-indent:none;gap:10px;cursor:grab;user-select:none;transform:none;-webkit-touch-callout:none;-webkit-user-select:none;touch-action:pan-y">
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-quobf2" data-framer-name="a"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4571" height="6783"
-                            sizes="348px"
-                            srcset="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783 690w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=2048&amp;width=4571&amp;height=6783 1380w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=4096&amp;width=4571&amp;height=6783 2760w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?width=4571&amp;height=6783 4571w"
-                            src="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.8% 66.5%;object-fit:cover">
+            <section id="custom-carousel-section" style="width: 100%; margin: 50px auto; padding: 0 20px;">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
                         </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-1w8tm0y" data-framer-name="b"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="6960" height="4640"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=512&amp;width=6960&amp;height=4640 512w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640 1024w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=2048&amp;width=6960&amp;height=4640 2048w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=4096&amp;width=6960&amp;height=4640 4096w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?width=6960&amp;height=4640 6960w"
-                            src="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50% 19.6%;object-fit:cover">
+                    <button class="carousel-button prev" id="prevButton"> &lt; </button>
+                    <button class="carousel-button next" id="nextButton"> &gt; </button>
+                    <div class="carousel-indicators" id="carouselIndicators">
                         </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-9tb02i" data-framer-name="c"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="3979" height="5968"
-                            sizes="285px"
-                            srcset="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968 682w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=2048&amp;width=3979&amp;height=5968 1365w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=4096&amp;width=3979&amp;height=5968 2730w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?width=3979&amp;height=5968 3979w"
-                            src="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-1cx2dt0" data-framer-name="d"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49% 29%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-wfduva" data-framer-name="e"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4376" height="5663"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663 791w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=2048&amp;width=4376&amp;height=5663 1582w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=4096&amp;width=4376&amp;height=5663 3165w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?width=4376&amp;height=5663 4376w"
-                            src="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.3% 28.2%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-1tll9y7" data-framer-name="f"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50.2% 32.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="false">
-                      <div class="framer-1mk46za" data-framer-name="g"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4293" height="6439"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439 682w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=2048&amp;width=4293&amp;height=6439 1365w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=4096&amp;width=4293&amp;height=6439 2730w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?width=4293&amp;height=6439 4293w"
-                            src="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:53% 40.4%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-quobf2" data-framer-name="a"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4571" height="6783"
-                            sizes="348px"
-                            srcset="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783 690w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=2048&amp;width=4571&amp;height=6783 1380w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=4096&amp;width=4571&amp;height=6783 2760w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?width=4571&amp;height=6783 4571w"
-                            src="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.8% 66.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1w8tm0y" data-framer-name="b"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="6960" height="4640"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=512&amp;width=6960&amp;height=4640 512w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640 1024w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=2048&amp;width=6960&amp;height=4640 2048w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=4096&amp;width=6960&amp;height=4640 4096w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?width=6960&amp;height=4640 6960w"
-                            src="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50% 19.6%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-9tb02i" data-framer-name="c"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="3979" height="5968"
-                            sizes="285px"
-                            srcset="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968 682w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=2048&amp;width=3979&amp;height=5968 1365w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=4096&amp;width=3979&amp;height=5968 2730w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?width=3979&amp;height=5968 3979w"
-                            src="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1cx2dt0" data-framer-name="d"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49% 29%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-wfduva" data-framer-name="e"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4376" height="5663"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663 791w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=2048&amp;width=4376&amp;height=5663 1582w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=4096&amp;width=4376&amp;height=5663 3165w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?width=4376&amp;height=5663 4376w"
-                            src="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.3% 28.2%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1tll9y7" data-framer-name="f"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50.2% 32.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1mk46za" data-framer-name="g"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4293" height="6439"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439 682w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=2048&amp;width=4293&amp;height=6439 1365w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=4096&amp;width=4293&amp;height=6439 2730w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?width=4293&amp;height=6439 4293w"
-                            src="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:53% 40.4%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-quobf2" data-framer-name="a"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4571" height="6783"
-                            sizes="348px"
-                            srcset="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783 690w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=2048&amp;width=4571&amp;height=6783 1380w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=4096&amp;width=4571&amp;height=6783 2760w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?width=4571&amp;height=6783 4571w"
-                            src="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.8% 66.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1w8tm0y" data-framer-name="b"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="6960" height="4640"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=512&amp;width=6960&amp;height=4640 512w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640 1024w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=2048&amp;width=6960&amp;height=4640 2048w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=4096&amp;width=6960&amp;height=4640 4096w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?width=6960&amp;height=4640 6960w"
-                            src="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50% 19.6%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-9tb02i" data-framer-name="c"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="3979" height="5968"
-                            sizes="285px"
-                            srcset="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968 682w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=2048&amp;width=3979&amp;height=5968 1365w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=4096&amp;width=3979&amp;height=5968 2730w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?width=3979&amp;height=5968 3979w"
-                            src="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1cx2dt0" data-framer-name="d"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49% 29%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-wfduva" data-framer-name="e"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4376" height="5663"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663 791w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=2048&amp;width=4376&amp;height=5663 1582w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=4096&amp;width=4376&amp;height=5663 3165w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?width=4376&amp;height=5663 4376w"
-                            src="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.3% 28.2%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1tll9y7" data-framer-name="f"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50.2% 32.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1mk46za" data-framer-name="g"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4293" height="6439"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439 682w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=2048&amp;width=4293&amp;height=6439 1365w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=4096&amp;width=4293&amp;height=6439 2730w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?width=4293&amp;height=6439 4293w"
-                            src="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:53% 40.4%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-quobf2" data-framer-name="a"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4571" height="6783"
-                            sizes="348px"
-                            srcset="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783 690w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=2048&amp;width=4571&amp;height=6783 1380w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=4096&amp;width=4571&amp;height=6783 2760w, https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?width=4571&amp;height=6783 4571w"
-                            src="https://framerusercontent.com/images/2ijjqDthcOu3JcE9BWeb1xmRiA.jpg?scale-down-to=1024&amp;width=4571&amp;height=6783"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.8% 66.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1w8tm0y" data-framer-name="b"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="6960" height="4640"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=512&amp;width=6960&amp;height=4640 512w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640 1024w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=2048&amp;width=6960&amp;height=4640 2048w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=4096&amp;width=6960&amp;height=4640 4096w, https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?width=6960&amp;height=4640 6960w"
-                            src="https://framerusercontent.com/images/G8vRDYza7xRAI6GBGYDrLjQO8c.jpg?scale-down-to=1024&amp;width=6960&amp;height=4640"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50% 19.6%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-9tb02i" data-framer-name="c"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="3979" height="5968"
-                            sizes="285px"
-                            srcset="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968 682w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=2048&amp;width=3979&amp;height=5968 1365w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=4096&amp;width=3979&amp;height=5968 2730w, https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?width=3979&amp;height=5968 3979w"
-                            src="https://framerusercontent.com/images/bpd5xwJsoMJBTkkXfZh1RknnnQ.jpg?scale-down-to=1024&amp;width=3979&amp;height=5968"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1cx2dt0" data-framer-name="d"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/4oIUksmLum7YqmsdGGxh207sd2M.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49% 29%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-wfduva" data-framer-name="e"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4376" height="5663"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663 791w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=2048&amp;width=4376&amp;height=5663 1582w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=4096&amp;width=4376&amp;height=5663 3165w, https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?width=4376&amp;height=5663 4376w"
-                            src="https://framerusercontent.com/images/WVRwc71gVSCvtgMJuOc19PXDE3M.jpg?scale-down-to=1024&amp;width=4376&amp;height=5663"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:49.3% 28.2%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1tll9y7" data-framer-name="f"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4640" height="6960"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960 682w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=2048&amp;width=4640&amp;height=6960 1365w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=4096&amp;width=4640&amp;height=6960 2730w, https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?width=4640&amp;height=6960 4640w"
-                            src="https://framerusercontent.com/images/SLTuz06XHtTJx1iadp40OpAPU.jpg?scale-down-to=1024&amp;width=4640&amp;height=6960"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:50.2% 32.5%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                    <li style="display:contents" aria-hidden="true">
-                      <div class="framer-1mk46za" data-framer-name="g"
-                        style="flex-shrink:0;user-select:none;width:calc(25% - 10px + 2.5px);height:100%;opacity:1;visibility:hidden;transform:none;transform-origin:100% 50% 0">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
-                          data-framer-background-image-wrapper="true"><img decoding="async" width="4293" height="6439"
-                            sizes="284px"
-                            srcset="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439 682w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=2048&amp;width=4293&amp;height=6439 1365w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=4096&amp;width=4293&amp;height=6439 2730w, https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?width=4293&amp;height=6439 4293w"
-                            src="https://framerusercontent.com/images/ionkdtGVisv2i4Sxf4LMvMS2M4.jpg?scale-down-to=1024&amp;width=4293&amp;height=6439"
-                            alt
-                            style="display:block;width:100%;height:100%;border-radius:inherit;object-position:53% 40.4%;object-fit:cover">
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
-                <fieldset
-                  style="display:flex;justify-content:space-between;align-items:center;position:absolute;pointer-events:none;user-select:none;top:0;left:0;right:0;bottom:0;border:0;padding:0;margin:0"
-                  aria-label="Slideshow pagination controls" class="framer--slideshow-controls">
-                  <div
-                    style="position:absolute;display:flex;flex-direction:row;justify-content:space-between;gap:unset;opacity:1;align-items:center;inset:20px;top:20px;left:20px;right:20px;bottom:20px">
-                    <button type="button" aria-label="Previous" tabindex="0"
-                      style="border:none;display:block;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:0;background-color:rgba(0, 0, 0, 0.2);width:40px;height:40px;border-radius:40px;pointer-events:auto;transform:none"><img
-                        decoding="async" width="40" height="40"
-                        src="https://framerusercontent.com/images/6tTbkXggWgQCAJ4DO2QEdXXmgM.svg"
-                        alt="Back Arrow"></button><button type="button" aria-label="Next" tabindex="0"
-                      style="border:none;display:block;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:0;background-color:rgba(0, 0, 0, 0.2);width:40px;height:40px;border-radius:40px;pointer-events:auto;transform:none"><img
-                        decoding="async" width="40" height="40"
-                        src="https://framerusercontent.com/images/11KSGbIZoRSg4pjdnUoif6MKHI.svg"
-                        alt="Next Arrow"></button></div>
-                  <div
-                    style="display:flex;place-content:center;place-items:center;overflow:hidden;position:absolute;pointer-events:auto;left:50%;top:unset;transform:translateX(-50%);flex-direction:row;bottom:10px;border-radius:50px;background-color:rgba(0, 0, 0, 0.2);user-select:none">
-                    <button aria-label="Scroll to page 1" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 10px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:1">
-                      </div>
-                    </button><button aria-label="Scroll to page 2" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button><button aria-label="Scroll to page 3" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button><button aria-label="Scroll to page 4" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button><button aria-label="Scroll to page 5" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button><button aria-label="Scroll to page 6" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 5px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button><button aria-label="Scroll to page 7" type="button"
-                      style="border:none;display:flex;place-content:center;place-items:center;overflow:hidden;background:transparent;cursor:pointer;margin:0;padding:10px 10px 10px 5px">
-                      <div
-                        style="border-radius:50%;background:white;cursor:pointer;border:none;place-content:center;place-items:center;padding:0;width:10px;height:10px;background-color:rgb(255, 255, 255);opacity:0.5">
-                      </div>
-                    </button></div>
-                </fieldset>
-              </section>
-            </div>
+            </section>
             <div class="framer-7vn9ui">
               <div class="framer-100c3iu">
                 <div class="framer-1yyuwc2" style="transform:translateX(-50%)">
@@ -5081,9 +4767,7 @@
                   style="transform:translateX(-50%)">
                   <h2
                     style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:19px;--framer-letter-spacing:1px;--framer-line-height:23px;--framer-text-alignment:center;--framer-text-color:rgb(255, 255, 255)"
-                    class="framer-text">¡Hora de ponerse elegantes! Hombres, a desempolvar el traje. Mujeres, a brillar
-                    con su vestido de fiesta.<br class="framer-text"><br class="framer-text">Color blanco y similares:
-                    <br class="framer-text">¡Eso dejémoslo para la&nbsp;novia!</h2>
+                    class="framer-text">¡Hora de ponerse elegantes! Hombres, a desempolvar el traje. Mujeres, a brillar con su vestido de fiesta.<br class="framer-text"><br class="framer-text">Color blanco y similares:<br class="framer-text">¡Eso dejémoslo para la&nbsp;novia!</h2>
                 </div>
               </div>
               <div class="framer-1kwt7q">
@@ -5110,8 +4794,7 @@
                   style="transform:translateX(-50%)">
                   <h2
                     style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:19px;--framer-letter-spacing:1px;--framer-line-height:23px;--framer-text-alignment:center;--framer-text-color:rgb(255, 255, 255)"
-                    class="framer-text">Lo más importante es tu presencia, pero si deseas hacernos un regalo, aquí
-                    tienes nuestra lista de novios:</h2>
+                    class="framer-text">Lo más importante es tu presencia, pero si deseas hacernos un regalo, aquí tienes nuestra lista de novios:</h2>
                 </div><a class="framer-1nt2pol framer-1gnnqte" data-border="true"
                   href="https://novios.falabella.com/info-evento/evento?codigoEvento=2101293" target="_blank"
                   rel="noopener">
@@ -5189,19 +4872,19 @@
                   <div class="framer-vtje1m">
                     <div class="framer-6ssyro" data-framer-component-type="RichTextContainer" style="transform:none">
                       <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-text-alignment:left;--framer-text-color:rgb(82, 82, 82)"
-                        class="framer-text">Nombre y Apellido</p>
+                        class="framer-text">Cristian Castillo</p>
                     </div>
                   </div>
                   <div class="framer-18gek7a">
                     <select class="framer-1nq5ceb" 
-                          style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 15px;"
+                          style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 30px; background-color: #fff; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 10 6.666\'%3E%3Cpath d=\'M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z\' fill=\'rgb(0,0,0)\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px;"
                           onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
                       <option value="" disabled selected>Número de asistentes</option>
                       <option value="1" style="color: rgb(0, 0, 0);">1 asistente</option>
                       <option value="2" style="color: rgb(0, 0, 0);">2 asistentes</option>
-                  </select>
+                    </select>
                     <select class="framer-799iu9" 
-                            style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 15px;"
+                            style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 30px; background-color: #fff; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 10 6.666\'%3E%3Cpath d=\'M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z\' fill=\'rgb(0,0,0)\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px;"
                             onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
                         <option value="" disabled selected>Confirmación</option>
                         <option value="si" style="color: rgb(0, 0, 0);">Sí, ahí estaré!</option>
@@ -5211,14 +4894,12 @@
                   <div class="framer-va8x25">
                     <textarea class="framer-8k3mro" 
                               placeholder="¿Tienes restricciones de alimentos o alergias? Ejemplo: Vegano, vegetariano, celiaco, intolerante a la lactosa, etc."
-                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;">
-                    </textarea>
+                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;"></textarea>
                   </div>
                   <div class="framer-1mz9p1k">
                     <textarea class="framer-2e51rf" 
-                              placeholder="Mensaje para los novios (opcional)!"
-                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;">
-                    </textarea>
+                              placeholder="Mensaje para los novios (opcional)"
+                              style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;"></textarea>
                   </div>
                 </div>
                 <div class="framer-1va0za1">
@@ -5334,8 +5015,6 @@
     href="https://framerusercontent.com/sites/4rOzaGByovMSnXgurxXZTj/shared-lib.BLKzmHDi.mjs">
   <link rel="modulepreload" fetchpriority="low"
     href="https://framerusercontent.com/sites/4rOzaGByovMSnXgurxXZTj/script_main.CmGie7bj.mjs">
-  <script type="module" async data-framer-bundle="main" fetchPriority="low"
-    src="https://framerusercontent.com/sites/4rOzaGByovMSnXgurxXZTj/script_main.CmGie7bj.mjs"></script>
   <div id="svg-templates"
     style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict"
     aria-hidden="true">
@@ -5419,7 +5098,306 @@
     </svg>
   </div>
 
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.getElementById('carouselTrack');
+        const container = track.parentElement;
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const indicatorsContainer = document.getElementById('carouselIndicators');
+        
+        // CONFIGURACIÓN
+        const imagesPerView = 4;
+        const autoAdvanceInterval = 3000;
+        
+        const imageFiles = [
+            'slide-1.jpg',
+            'slide-2.jpg',
+            'slide-3.jpg',
+            'slide-4.jpg',
+            'slide-5.jpg',
+            'slide-6.jpg',
+            'slide-7.jpg'
+        ];
+        
+        const imagePath = './images/'; 
+        
+        // DUPLICACIÓN DE SLIDES PARA EL LOOP INFINITO
+        const allFiles = [...imageFiles, ...imageFiles.slice(0, imagesPerView)]; 
+        
+        // GENERACIÓN DE SLIDES Y PUNTOS
+        allFiles.forEach((fileName, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('carousel-slide');
+            const img = document.createElement('img');
+            img.src = imagePath + fileName;
+            img.alt = `Foto Carrusel ${index + 1}`;
+            slide.appendChild(img);
+            track.appendChild(slide);
 
+            if (index < imageFiles.length) { 
+                const dot = document.createElement('div');
+                dot.classList.add('indicator-dot');
+                dot.dataset.index = index;
+                indicatorsContainer.appendChild(dot);
+
+                dot.addEventListener('click', (e) => {
+                    e.preventDefault(); // Evita conflicto de arrastre
+                    slideIndex = index;
+                    stopAutoAdvance();
+                    updateCarousel();
+                    startAutoAdvance();
+                });
+            }
+        });
+
+        
+        // LÓGICA DE NAVEGACIÓN Y BUCLE
+        const slides = track.querySelectorAll('.carousel-slide');
+        const dots = indicatorsContainer.querySelectorAll('.indicator-dot');
+        const originalSlideCount = imageFiles.length;
+        const totalSlideCount = slides.length;
+        let slideIndex = 0;
+        let autoAdvanceTimer;
+        
+        // Variables para el arrastre
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+
+        const getSlideWidth = () => slides[0] ? slides[0].clientWidth : 468;
+        
+
+        const updateCarousel = (instant = false) => {
+            const slideWidth = getSlideWidth();
+            
+            // 💡 FIX 2: Gestión de la transición para el loop
+            if (slideIndex >= originalSlideCount) {
+                if (!instant) {
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                    currentTranslate = -originalSlideCount * slideWidth;
+                    track.style.transform = `translateX(${currentTranslate}px)`;
+                    
+                    // Salto instantáneo de la copia al inicio real
+                    setTimeout(() => {
+                        slideIndex = slideIndex % originalSlideCount;
+                        updateCarousel(true);
+                    }, 500);
+                } else {
+                    track.style.transition = 'none';
+                    slideIndex = slideIndex % originalSlideCount;
+                    currentTranslate = -slideIndex * slideWidth;
+                    track.style.transform = `translateX(${currentTranslate}px)`;
+                }
+            } else {
+                track.style.transition = instant ? 'none' : 'transform 0.5s ease-in-out';
+                currentTranslate = -slideIndex * slideWidth;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            }
+
+            // Guardamos la posición actual para el próximo inicio de arrastre
+            prevTranslate = currentTranslate;
+
+            // Actualizar puntos
+            dots.forEach((dot) => dot.classList.remove('active'));
+            dots[slideIndex % originalSlideCount].classList.add('active');
+        };
+
+        const advanceSlide = () => {
+            slideIndex++;
+            updateCarousel();
+        };
+
+        const startAutoAdvance = () => {
+            stopAutoAdvance(); 
+            autoAdvanceTimer = setInterval(advanceSlide, autoAdvanceInterval);
+        };
+
+        const stopAutoAdvance = () => {
+            clearInterval(autoAdvanceTimer);
+        };
+        
+        // --- FUNCIONALIDAD DE ARRASTRE (DRAG) MEJORADA ---
+        
+        const getPositionX = e => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        
+        // 💡 FIX 3: Eventos de ratón y conflicto
+        const dragStart = e => {
+            if (e.type.includes('mouse')) e.preventDefault(); // Previene la selección de texto
+            
+            stopAutoAdvance();
+            isDragging = true;
+            startPos = getPositionX(e);
+            container.style.cursor = 'grabbing';
+            track.style.transition = 'none'; // Sin animación mientras se arrastra
+        };
+
+        const dragMove = e => {
+            if (!isDragging) return;
+            const currentPosition = getPositionX(e);
+            const deltaX = currentPosition - startPos;
+            
+            currentTranslate = prevTranslate + deltaX;
+            
+            // Aplicar el arrastre en tiempo real
+            track.style.transform = `translateX(${currentTranslate}px)`;
+        };
+
+        const dragEnd = () => {
+            if (!isDragging) return;
+            isDragging = false;
+            container.style.cursor = 'grab';
+            
+            const slideWidth = getSlideWidth();
+            
+            // 💡 FIX 4: Cálculo de snap (ajuste) mejorado
+            // Calcula el índice más cercano al punto donde se soltó el cursor
+            let newSlideIndex = -Math.round(currentTranslate / slideWidth);
+            
+            // Aplicar límites para el loop
+            if (newSlideIndex < 0) {
+                 newSlideIndex = 0; 
+            } else if (newSlideIndex >= totalSlideCount) {
+                 newSlideIndex = totalSlideCount - 1; 
+            }
+            
+            slideIndex = newSlideIndex;
+            
+            updateCarousel(); // Vuelve a la posición del slide con animación (snap)
+            startAutoAdvance();
+        };
+
+        // Asignación de eventos: 'window' para 'mousemove' y 'mouseup' es clave
+        // para que el arrastre no se corte si el cursor sale del contenedor.
+        container.addEventListener('mousedown', dragStart);
+        window.addEventListener('mousemove', dragMove);
+        window.addEventListener('mouseup', dragEnd);
+        container.addEventListener('mouseleave', () => { if (isDragging) dragEnd(); }); 
+        
+        // Eventos táctiles (para móviles)
+        container.addEventListener('touchstart', dragStart);
+        container.addEventListener('touchmove', dragMove);
+        container.addEventListener('touchend', dragEnd);
+
+        // Eventos de botones (Solución de conflicto de timer)
+        nextButton.addEventListener('click', () => {
+            stopAutoAdvance();
+            advanceSlide();
+            startAutoAdvance();
+        });
+
+        prevButton.addEventListener('click', () => {
+            stopAutoAdvance();
+            
+            if (slideIndex === 0) {
+                slideIndex = originalSlideCount;
+                updateCarousel(true); // Salto instantáneo al final de la copia
+            }
+            slideIndex--;
+            updateCarousel();
+            startAutoAdvance();
+        });
+
+        // Asegurar el correcto funcionamiento al redimensionar
+        window.addEventListener('resize', () => {
+            updateCarousel(true); 
+        });
+        
+        // Inicializar
+        updateCarousel(true); 
+        startAutoAdvance();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const audio = document.getElementById('background-music');
+        const button = document.getElementById('play-pause-button');
+        const icon = document.getElementById('player-icon');
+        let isPlaying = false;
+
+        // --- 1. INTENTO DE REPRODUCCIÓN AUTOMÁTICA (SOLO UNA VEZ) ---
+        // Intentamos reproducir al cargar. Esto fallará en Chrome/Firefox, pero es el método correcto.
+        audio.play()
+            .then(() => {
+                // ÉXITO (Solo si el navegador lo permite o es un audio silenciado)
+                isPlaying = true;
+                icon.innerHTML = '&#10074;&#10074;'; // Mostrar icono de Pausa
+                button.style.backgroundColor = '#e2a525'; // Botón activo
+            })
+            .catch(error => {
+                // FALLO (Lo más probable, por las políticas del navegador)
+                isPlaying = false;
+                icon.innerHTML = '&#9658;'; // Dejar en Play y esperar el clic
+                button.style.backgroundColor = 'black'; 
+            });
+
+        // --- 2. LÓGICA DE CONTROL MANUAL ---
+        button.addEventListener('click', () => {
+            if (isPlaying) {
+                // Pausar
+                audio.pause();
+                icon.innerHTML = '&#9658;'; // Play
+                button.style.backgroundColor = '#e2a525';
+            } else {
+                // Reproducir
+                audio.play();
+                icon.innerHTML = '&#10074;&#10074;'; // Pausa
+                button.style.backgroundColor = '#e2a525';
+            }
+            isPlaying = !isPlaying; 
+        });
+        
+        // --- 3. LÓGICA DE FIN DE PISTA (NO-LOOP) ---
+        // Cuando la pista termina, el botón vuelve automáticamente a Play (triángulo)
+        audio.addEventListener('ended', () => {
+             isPlaying = false;
+             icon.innerHTML = '&#9658;'; 
+             button.style.backgroundColor = 'black';
+             audio.currentTime = 0; // Opcional: rebobina al inicio si la reproducen de nuevo
+        });
+    });
+</script>
+
+<script>
+    (function() {
+        // Fecha objetivo: 20 de Marzo de 2026, 18:30:00 Hora Chile (UTC-3 en horario de verano)
+        const targetDate = new Date("2026-03-20T18:30:00-03:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                // Si la fecha ya pasó, poner todo en 0
+                document.getElementById("cd-dias").innerText = "0";
+                document.getElementById("cd-horas").innerText = "0";
+                document.getElementById("cd-minutos").innerText = "0";
+                document.getElementById("cd-segundos").innerText = "0";
+                return;
+            }
+
+            // Cálculos de tiempo
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Actualizar el HTML manteniendo el diseño
+            document.getElementById("cd-dias").innerText = days;
+            document.getElementById("cd-horas").innerText = hours;
+            document.getElementById("cd-minutos").innerText = minutes;
+            document.getElementById("cd-segundos").innerText = seconds;
+        }
+
+        // Iniciar intervalo para actualizar cada segundo
+        setInterval(updateCountdown, 1000);
+        
+        // Ejecutar inmediatamente para no esperar 1 segundo al cargar
+        updateCountdown();
+    })();
+</script>
 
 </body>
 
