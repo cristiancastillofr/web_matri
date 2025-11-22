@@ -4475,6 +4475,14 @@
         padding: 0 !important;
     }
 </style>
+<style>
+  /* Fuerza el color de fondo y de texto con alta especificidad al cargar la página */
+  #play-pause-button {
+    background-color: rgb(226, 165, 37) !important;
+    color: rgb(51, 51, 51) !important;
+  }
+</style>
+
 </head>
 
 <body>
@@ -4502,14 +4510,9 @@
                   Tu navegador no soporta el elemento de audio.
               </audio>
 
-              <button id="play-pause-button" 
-                      style="width: 100%; height: 100%; border: none; border-radius: 50%; 
-                            background-color: rgb(226, 165, 37) !important; 
-                            color: rgb(51, 51, 51) !important; 
-                            cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                  
-                  <span id="player-icon">&#9658;</span> 
-              </button>
+              <button id="play-pause-button" style="width: 100%; height: 100%; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                <span id="player-icon">&#9658;</span>
+            </button>
           </div>
       </div>
       <div class="framer-12kt662">
