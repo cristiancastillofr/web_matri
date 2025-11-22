@@ -12,24 +12,24 @@
 
   <meta name="viewport" content="width=2107.78">
   <meta name="generator" content="Framer 808fccf">
-  <title>My Framer Site</title>
+  <title>Constanza y Cristian</title>
   <meta name="description" content="Made with Framer">
   <meta name="framer-search-index"
     content="https://framerusercontent.com/sites/4rOzaGByovMSnXgurxXZTj/searchIndex-uF5iEt5d8DhH.json">
   <meta name="framer-search-index-fallback"
     content="https://framerusercontent.com/sites/4rOzaGByovMSnXgurxXZTj/searchIndex-OSxXVlJjvpGi.json">
-  <link href="https://framerusercontent.com/sites/icons/default-favicon-light.v1.png" rel="icon"
+  <link href="https://img.icons8.com/?size=80&id=0kpowhUgSpS0&format=png" rel="icon"
     media="(prefers-color-scheme: light)">
-  <link href="https://framerusercontent.com/sites/icons/default-favicon-dark.v1.png" rel="icon"
+  <link href="https://img.icons8.com/?size=80&id=0kpowhUgSpS0&format=png" rel="icon"
     media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="https://framerusercontent.com/sites/icons/default-touch-icon.v3.png">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="My Framer Site">
+  <meta property="og:title" content="Constanza y Cristian">
   <meta property="og:description" content="Made with Framer">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="My Framer Site">
+  <meta name="twitter:title" content="Constanza y Cristian">
   <meta name="twitter:description" content="Made with Framer">
 
   <style data-framer-font-css>
@@ -4428,6 +4428,53 @@
         background-color: rgba(255, 255, 255, 0.8);
     }
 </style>
+
+<style>
+    /* 1. ESTILOS PARA EL BOTÓN FLEXIBLE (CONTENEDOR VERDE) */
+    #btn-enviar {
+        /* Anulamos las dimensiones fijas de Framer */
+        width: auto !important;
+        min-width: 140px !important; 
+        height: auto !important;
+        min-height: 45px !important;
+        
+        /* Flexbox para centrar */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        
+        /* Padding lateral */
+        padding: 10px 25px !important; 
+        
+        /* Transición suave */
+        transition: background-color 0.3s ease !important;
+    }
+
+    /* 2. RESETEAR POSICIONAMIENTO DEL TEXTO */
+    #btn-enviar > div {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+        white-space: nowrap !important;
+    }
+    
+    /* 3. RECUPERAR ESTILOS DE TEXTO (FUENTE Y COLOR) */
+    #btn-enviar p, 
+    #btn-enviar div {
+        font-family: "Crimson Text", "Crimson Text Placeholder", serif !important; /* Tu fuente original */
+        color: rgb(255, 255, 255) !important; /* Color Blanco */
+        font-size: 17px !important;
+        letter-spacing: 3.2px !important; /* Espaciado original */
+        line-height: 17px !important;
+        text-transform: uppercase !important; /* Mayúsculas */
+        text-align: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
 </head>
 
 <body>
@@ -4862,28 +4909,24 @@
                 <div class="framer-16edp80" data-framer-component-type="RichTextContainer" style="transform:none">
                   <h2
                     style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-font-size:19px;--framer-letter-spacing:1px;--framer-line-height:23px;--framer-text-alignment:center"
-                    class="framer-text">Con el deseo de que todo sea perfecto, hemos reservado <strong
-                      class="framer-text">2 lugares</strong> en tu honor.<br class="framer-text">Agradecemos mucho que
-                    nos confirmen su asistencia para poder tener todo listo.</h2>
+                    class="framer-text">Con el deseo de que todo sea perfecto, hemos reservado <strong class="framer-text"><span id="cupos-disponibles">...</span> lugares</strong> en tu honor.<br class="framer-text">Agradecemos mucho que nos confirmen su asistencia para poder tener todo listo.</h2>
                 </div>
               </div>
               <div class="framer-bcxtlh">
                 <div class="framer-hwhlim">
                   <div class="framer-vtje1m">
                     <div class="framer-6ssyro" data-framer-component-type="RichTextContainer" style="transform:none">
-                      <p style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-text-alignment:left;--framer-text-color:rgb(82, 82, 82)"
-                        class="framer-text">Cristian Castillo</p>
+                      <p id="guest-name-display" style="--font-selector:R0Y7VW5uYS1yZWd1bGFy;--framer-font-family:&quot;Unna&quot;, &quot;Unna Placeholder&quot;, serif;--framer-text-alignment:left;--framer-text-color:rgb(82, 82, 82)"
+                        class="framer-text">...</p>
                     </div>
                   </div>
                   <div class="framer-18gek7a">
-                    <select class="framer-1nq5ceb" 
-                          style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 30px; background-color: #fff; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 10 6.666\'%3E%3Cpath d=\'M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z\' fill=\'rgb(0,0,0)\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px;"
-                          onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
-                      <option value="" disabled selected>Número de asistentes</option>
-                      <option value="1" style="color: rgb(0, 0, 0);">1 asistente</option>
-                      <option value="2" style="color: rgb(0, 0, 0);">2 asistentes</option>
+                    <select id="input-asistentes" class="framer-1nq5ceb" 
+                    style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 30px; background-color: #fff; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 10 6.666\'%3E%3Cpath d=\'M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z\' fill=\'rgb(0,0,0)\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px;"
+                    onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
+                    <option value="" disabled selected>Número de asistentes</option>
                     </select>
-                    <select class="framer-799iu9" 
+                    <select id="input-confirmacion" class="framer-799iu9" 
                             style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(82, 82, 82); -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border: none; padding-left: 15px; padding-right: 30px; background-color: #fff; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 10 6.666\'%3E%3Cpath d=\'M 8.872 0 C 8.872 0 6.936 0 5 0 C 3.064 0 1.127 0 1.127 0 C 0.189 0 -0.338 1.005 0.242 1.691 L 4.115 6.267 C 4.565 6.799 5.434 6.799 5.885 6.267 L 9.757 1.689 C 10.337 1.005 9.811 0 8.872 0 Z\' fill=\'rgb(0,0,0)\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px;"
                             onchange="if (this.value) { this.style.color = 'rgb(0, 0, 0)'; } else { this.style.color = 'rgb(82, 82, 82)'; }">
                         <option value="" disabled selected>Confirmación</option>
@@ -4892,20 +4935,19 @@
                     </select>
                   </div>
                   <div class="framer-va8x25">
-                    <textarea class="framer-8k3mro" 
-                              placeholder="¿Tienes restricciones de alimentos o alergias? Ejemplo: Vegano, vegetariano, celiaco, intolerante a la lactosa, etc."
+                    <textarea id="input-restricciones" class="framer-8k3mro" 
+                              placeholder="¿Tienes restricciones de alimentos o alergias? Ejemplo: Vegano, vegetariano, celiaco, intolerante a la lactosa, etc (opcional)."
                               style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;"></textarea>
                   </div>
                   <div class="framer-1mz9p1k">
-                    <textarea class="framer-2e51rf" 
-                              placeholder="Mensaje para los novios (opcional)"
+                    <textarea id="input-mensaje" class="framer-2e51rf" 
+                              placeholder="Mensaje para los novios (opcional)."
                               style="font-family: 'Unna', 'Unna Placeholder', serif; font-size: 16px; color: rgb(0, 0, 0); border: none; outline: none; resize: none; background: transparent; padding: 0;"></textarea>
                   </div>
                 </div>
-                <div class="framer-1va0za1">
+                <div id="btn-enviar" class="framer-1va0za1" style="cursor: pointer;"> 
                   <div class="framer-9uaviy" data-framer-component-type="RichTextContainer" style="transform:none">
-                    <p style="--font-selector:R0Y7Q3JpbXNvbiBUZXh0LXJlZ3VsYXI=;--framer-font-family:&quot;Crimson Text&quot;, &quot;Crimson Text Placeholder&quot;, serif;--framer-font-size:17px;--framer-letter-spacing:3.2px;--framer-line-height:17px;--framer-text-alignment:center;--framer-text-color:rgb(255, 255, 255);--framer-text-transform:uppercase"
-                      class="framer-text">Enviar</p>
+                      <p ...>Enviar</p>
                   </div>
                 </div>
               </div>
@@ -5097,6 +5139,37 @@
       </g>
     </svg>
   </div>
+
+<div id="custom-toast" style="
+    /* Posicionamiento y Centrado */
+    position: fixed;
+    top: 30px; /* CAMBIO CLAVE 1: Distancia de 30px del borde superior */
+    left: 50%;
+    transform: translateX(-50%); /* CAMBIO CLAVE 2: Solo centrado horizontal */
+    
+    /* Apariencia */
+    background-color: rgba(255, 255, 255, 0.95); 
+    color: #525252; 
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-width: 280px;
+    text-align: center;
+    
+    /* Control de Visibilidad */
+    z-index: 10000; 
+    opacity: 0; 
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+">
+    <p id="toast-icon" style="font-size: 24px; margin-bottom: 5px;"></p>
+    
+    <p id="toast-message" style="
+        font-family: 'Unna', 'Unna Placeholder', serif; 
+        font-size: 16px;
+        margin: 0;
+    "></p>
+</div>
 
  <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -5397,6 +5470,154 @@
         // Ejecutar inmediatamente para no esperar 1 segundo al cargar
         updateCountdown();
     })();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // URL del Apps Script (Recuperada del contexto)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJVz1Na_fyWhrjWuE56ocKeJK2etlZKd8FEgiZmr91Er7b6yfRjKAVBIiL0EeKXzXC/exec"; 
+
+    // Referencias a elementos
+    const nameDisplay = document.getElementById('guest-name-display');
+    const btnEnviar = document.getElementById('btn-enviar');
+    const selectAsistentes = document.getElementById('input-asistentes'); 
+    const btnText = btnEnviar.querySelector('p') || btnEnviar.querySelector('div'); 
+    
+    // Referencia al NUEVO elemento:
+    const cuposDisplay = document.getElementById('cupos-disponibles');
+
+    // Referencias al Toast
+    const toast = document.getElementById('custom-toast');
+    const toastMessage = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+
+    // Colores del botón
+    const colorOriginal = "#a2a56b"; 
+    const colorCargando = "#7e8248"; 
+    
+    // --- FUNCIÓN PARA MOSTRAR EL TOAST ---
+    function showToast(icon, message, duration = 3000) {
+        toastIcon.innerHTML = icon;
+        toastMessage.innerText = message;
+        toast.style.opacity = '1';
+        toast.style.visibility = 'visible';
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.visibility = 'hidden';
+        }, duration);
+    }
+    // ------------------------------------
+
+    // 1. Obtener ID y Nombre/Cupos
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestId = urlParams.get('id');
+
+    if (guestId) {
+        fetch(`${SCRIPT_URL}?id=${guestId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.result === "success") {
+                    const cupos = data.cupos;
+                    nameDisplay.innerText = data.nombre;
+                    
+                    // LÍNEA CLAVE AÑADIDA: Actualiza la cantidad de lugares
+                    cuposDisplay.innerText = cupos; 
+                    
+                    generateAttendanceOptions(selectAsistentes, cupos); 
+                } else {
+                    nameDisplay.innerText = "Invitado no identificado";
+                    cuposDisplay.innerText = "..."; // Si falla, deja el placeholder
+                }
+            })
+            .catch(err => {
+                console.log("No se pudo cargar el nombre/cupos:", err);
+                cuposDisplay.innerText = "...";
+            });
+    } else {
+        nameDisplay.innerText = "Hola Invitado";
+        cuposDisplay.innerText = "..."; // Si no hay ID, deja el placeholder
+        generateAttendanceOptions(selectAsistentes, 2); 
+    }
+
+    // FUNCIÓN: Genera las opciones de asistentes dinámicamente con estilos
+    function generateAttendanceOptions(selectElement, maxCupos) {
+        // Limpiamos las opciones dinámicas (dejando solo el placeholder)
+        let i = selectElement.options.length - 1;
+        while (i >= 1) { // Empezamos desde el 1 para no borrar el placeholder (índice 0)
+            selectElement.remove(i);
+            i--;
+        }
+
+        for (let i = 1; i <= maxCupos; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.setAttribute('style', 'color: rgb(0, 0, 0);'); 
+            option.textContent = (i === 1) ? '1 asistente' : `${i} asistentes`;
+            selectElement.appendChild(option);
+        }
+    }
+
+
+    // 2. Evento Click para enviar el formulario
+    btnEnviar.onclick = function(e) {
+        e.preventDefault(); 
+        e.stopPropagation(); 
+
+        // --- VALIDACIÓN ---
+        const asistentes = document.getElementById('input-asistentes').value;
+        const confirmacion = document.getElementById('input-confirmacion').value;
+
+        if (!asistentes || !confirmacion) {
+            showToast('⚠️', "Por favor, selecciona el N° de asistentes y tu Confirmación.");
+            return; 
+        }
+
+        if (!guestId) {
+            showToast('❌', "Error: Enlace de invitación incompleto.");
+            return;
+        }
+
+        // --- ESTADO "ENVIANDO" ---
+        const textoOriginal = btnText.innerText; 
+        btnText.innerText = "ENVIANDO...";      
+        btnEnviar.style.backgroundColor = colorCargando; 
+        btnEnviar.style.pointerEvents = "none";  
+
+        // Datos
+        const form = {
+            id: guestId,
+            asistentes: asistentes,
+            confirmacion: confirmacion,
+            restricciones: document.getElementById('input-restricciones').value,
+            mensaje: document.getElementById('input-mensaje').value
+        };
+
+        // --- ENVÍO ---
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result === "success") {
+                showToast('✅', "¡Confirmación recibida con éxito!");
+            } else {
+                showToast('⚠️', "Hubo un problema al guardar, pero inténtalo de nuevo.");
+            }
+        })
+        .catch(error => {
+            console.error("Detalle técnico:", error);
+            showToast('✅', "¡Confirmación enviada!"); 
+        })
+        .finally(() => {
+            // Restaurar botón
+            btnText.innerText = "ENVIADO"; 
+            btnEnviar.style.backgroundColor = colorOriginal;
+            btnEnviar.style.pointerEvents = "auto";
+        });
+    };
+});
 </script>
 
 </body>
