@@ -5431,8 +5431,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Fallback si no tiene ID, intentamos buscarlo por la clase si es único, o asumiendo orden
             const confirmacionVal = confirmacionInput ? confirmacionInput.value : "";
 
-            if (!asistentesVal || !confirmacionVal) {
-                showToast('⚠️', "Por favor selecciona asistentes y confirma asistencia.");
+            if (!confirmacionVal) {
+                showToast('⚠️', "Por favor, selecciona el N° de asistentes y tu Confirmación.");
+                return; 
+            }
+            
+            if (asistentesVal === 'si' && !asistentes) {
+                showToast('⚠️', "Por favor, selecciona el N° de asistentes.");
                 return;
             }
 
@@ -5497,7 +5502,8 @@ document.addEventListener('DOMContentLoaded', function() {
             './images/mobile-slide-4.jpg',
             './images/mobile-slide-5.jpg',
             './images/mobile-slide-6.jpg',
-            './images/mobile-slide-7.jpg'
+            './images/mobile-slide-7.jpg',
+            './images/mobile-slide-polo.jpeg'
         ];
         
         // Duplicación para efecto infinito

@@ -5190,7 +5190,8 @@
             'slide-4.jpg',
             'slide-5.jpg',
             'slide-6.jpg',
-            'slide-7.jpg'
+            'slide-7.jpg',
+            'slide-polo.jpeg'
         ];
         
         const imagePath = './images/'; 
@@ -5568,9 +5569,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const asistentes = document.getElementById('input-asistentes').value;
         const confirmacion = document.getElementById('input-confirmacion').value;
 
-        if (!asistentes || !confirmacion) {
+        if (!confirmacion) {
             showToast('⚠️', "Por favor, selecciona el N° de asistentes y tu Confirmación.");
             return; 
+        }
+        
+        if (confirmacion === 'si' && !asistentes) {
+            showToast('⚠️', "Por favor, selecciona el N° de asistentes.");
+            return;
         }
 
         if (!guestId) {
